@@ -35,20 +35,22 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Impact", 19.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(129, 9);
+            this.label1.Location = new System.Drawing.Point(89, 7);
+            this.label1.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(452, 42);
+            this.label1.Size = new System.Drawing.Size(365, 34);
             this.label1.TabIndex = 0;
             this.label1.Text = "Controle de Loja - Modelo N-Tier";
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(720, 412);
+            this.ClientSize = new System.Drawing.Size(540, 335);
             this.Controls.Add(this.label1);
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Controle de Loja";
             this.ResumeLayout(false);
             this.PerformLayout();
 
