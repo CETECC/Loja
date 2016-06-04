@@ -1,0 +1,10 @@
+Camadas comuns do modelo N-TIER (N-CAMADAS)
+
+UI - User Interface (Apresentação)
+	Cuida somente da apresentação dos dados e da interação com o usuário.
+Business ou BLL (Business Logic Layer)
+	Cuida do tratamento dos dados de acordo com as regras da empresa ou da necessidade do sistema.
+Data ou DAL (Data Access Layer)
+	Cuida da leitura e persistência dos dados nos meios adequados (Banco de Dados, Arquivos, Nuvem, etc.)
+Model ou DTO (Data Transport Objects)
+	Classes criadas exclusivamente para manter e transportar os dados entre as camadas acima.

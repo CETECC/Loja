@@ -11,6 +11,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loja.Data", "Loja.Data\Loja
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loja.Model", "Loja.Model\Loja.Model.csproj", "{E4045634-4E10-4954-BBFE-D77552A35F3E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentos", "Documentos", "{58C7BF9E-C425-457F-8B7D-A775B1CEC4D0}"
+	ProjectSection(SolutionItems) = preProject
+		Descricao do Modelo N-TIER.txt = Descricao do Modelo N-TIER.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

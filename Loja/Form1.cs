@@ -16,5 +16,16 @@ namespace Loja
         {
             InitializeComponent();
         }
+
+        private void sairToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void produtosToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FrmProdutos frm = new FrmProdutos();
+            frm.ShowDialog();
+        }
     }
 }

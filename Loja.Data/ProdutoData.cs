@@ -22,14 +22,35 @@ namespace Loja.Data
                     cmd.CommandType = CommandType.Text;
                     cmd.CommandText = "SELECT ProdutoID, Nome, Descricao, Preco FROM Produto";
 
+                    conn.Open();
                     IDataReader dr = cmd.ExecuteReader();
 
                     IEnumerable<Produto> list = MapList(dr);
-
                     return list;
                 }
             }
         }
+
+        /*
+        A PARTIR DAQUI...
+
+        Fazer os métodos
+        public void Adicionar(Produto produto)
+        {
+        }
+
+        public void Modificar(Produto produto)
+        {
+        }
+
+        public void Excluir(int produtoID)
+        {
+        }
+
+        UTILIZAR PARAMETROS !!!
+        Pesquisar por utilização de Parametros
+        no SqlCommand (IDbCommand)
+        */
 
         private IEnumerable<Produto> MapList(IDataReader dr)
         {
