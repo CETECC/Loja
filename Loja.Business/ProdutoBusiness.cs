@@ -21,5 +21,10 @@ namespace Loja.Business
         {
             return _produtoData.Listar();
         }
+
+        public void Adicionar(Produto produto)
+        {
+            _produtoData.Adicionar(produto);
+        }
     }
 }

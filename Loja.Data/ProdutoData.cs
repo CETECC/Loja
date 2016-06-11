@@ -11,12 +11,15 @@ namespace Loja.Data
 {
     public class ProdutoData
     {
+        // String de conexão ao banco de dados
+        private const string StrConn = "Password=c3t3cc;Persist Security Info=True;User ID=cetecc;Initial Catalog=Cetecc;Data Source=MARCIO-DELL";
+
         public IEnumerable<Produto> Listar()
         {
-            string strConn = "Password=c3t3cc;Persist Security Info=True;User ID=cetecc;Initial Catalog=Cetecc;Data Source=MARCIO-DELL";
-
-            using (IDbConnection conn = new SqlConnection(strConn))
+            // SqlConnection -> conexão com o banco de dados
+            using (IDbConnection conn = new SqlConnection(StrConn))
             {
+                // SqlCommand -> 
                 using (IDbCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandType = CommandType.Text;
@@ -31,12 +34,36 @@ namespace Loja.Data
             }
         }
 
-        /*
-        A PARTIR DAQUI...
-
-        Fazer os métodos
         public void Adicionar(Produto produto)
         {
+            string strCmd = @"INSERT INTO Produto
+                               (Nome
+                               ,Descricao
+                               ,Preco)
+                         VALUES
+                               (@Nome
+                               ,@Descricao
+                               ,@Preco)";
+
+            using (IDbConnection conn = new SqlConnection(StrConn))
+            {
+                using (IDbCommand cmd = new SqlCommand(strCmd, (SqlConnection)conn))
+                {
+                    // Adicionar pela interface IDbCommand
+                    IDbDataParameter p1 = new SqlParameter("@Nome", produto.Nome);
+                    cmd.Parameters.Add(p1);
+
+                    // OU Adicionar pela classe SqlCommand
+                    ((SqlCommand)cmd).Parameters.AddWithValue("@Descricao", produto.Descricao);
+                    ((SqlCommand)cmd).Parameters.AddWithValue("@Preco", produto.Preco);
+
+                    // Abrir a conexão
+                    conn.Open();
+
+                    // Executar o comando
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         public void Modificar(Produto produto)
@@ -46,11 +73,6 @@ namespace Loja.Data
         public void Excluir(int produtoID)
         {
         }
-
-        UTILIZAR PARAMETROS !!!
-        Pesquisar por utilização de Parametros
-        no SqlCommand (IDbCommand)
-        */
 
         private IEnumerable<Produto> MapList(IDataReader dr)
         {

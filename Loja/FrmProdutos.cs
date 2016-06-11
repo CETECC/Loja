@@ -39,5 +39,15 @@ namespace Loja
                 }
             }
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var frm = new FrmProdutoNovo();
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                lstProdutos.Clear();
+                FrmProdutos_Load(this, EventArgs.Empty);
+            }
+        }
     }
 }
