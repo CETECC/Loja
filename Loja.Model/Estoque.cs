@@ -9,6 +9,6 @@ namespace Loja.Model
     public class Estoque
     {
         public Produto Produto { get; set; }
-        public int QUantidade { get; set; }
+        public int Quantidade { get; set; }
     }
 }

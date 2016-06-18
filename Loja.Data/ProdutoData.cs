@@ -68,6 +68,28 @@ namespace Loja.Data
 
         public void Modificar(Produto produto)
         {
+            string strCmd = @"UPDATE Produto
+                                 SET Nome = @Nome,
+                                     Descricao = @Descricao,
+                                     Preco = @Preco
+                               WHERE ProdutoID = @ProdutoID";
+
+            using (IDbConnection conn = new SqlConnection(StrConn))
+            {
+                using (IDbCommand cmd = new SqlCommand(strCmd, (SqlConnection)conn))
+                {
+                    ((SqlCommand)cmd).Parameters.AddWithValue("@ProdutoID", produto.ProdutoID);
+                    ((SqlCommand)cmd).Parameters.AddWithValue("@Nome", produto.Nome);
+                    ((SqlCommand)cmd).Parameters.AddWithValue("@Descricao", produto.Descricao);
+                    ((SqlCommand)cmd).Parameters.AddWithValue("@Preco", produto.Preco);
+
+                    // Abrir a conexão
+                    conn.Open();
+
+                    // Executar o comando
+                    cmd.ExecuteNonQuery();
+                }
+            }
         }
 
         public void Excluir(int produtoID)

@@ -22,9 +22,12 @@ namespace Loja.Business
             return _produtoData.Listar();
         }
 
-        public void Adicionar(Produto produto)
+        public void Salvar(Produto produto)
         {
-            _produtoData.Adicionar(produto);
+            if (produto.ProdutoID == 0)
+                _produtoData.Adicionar(produto);
+            else
+                _produtoData.Modificar(produto);
         }
     }
 }
