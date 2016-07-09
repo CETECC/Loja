@@ -14,19 +14,19 @@ namespace Loja
 {
     public partial class FrmProdutoNovo : Form
     {
-        private Produto _produto;
+        private Estoque _estoque;
 
         public FrmProdutoNovo()
         {
             InitializeComponent();
         }
 
-        public FrmProdutoNovo(Produto produto) : this()
+        public FrmProdutoNovo(Estoque estoque) : this()
         {
-            _produto = produto;
-            txtNome.Text = _produto.Nome;
-            txtDescricao.Text = _produto.Descricao;
-            txtPreco.Text = _produto.Preco.ToString("F2").PadLeft(2, '0');
+            _estoque = estoque;
+            txtNome.Text = _estoque.Produto.Nome;
+            txtDescricao.Text = _estoque.Produto.Descricao;
+            txtPreco.Text = _estoque.Produto.Preco.ToString("F2").PadLeft(2, '0');
         }
 
         private void btnOK_Click(object sender, EventArgs e)
@@ -35,13 +35,16 @@ namespace Loja
             {
                 // Adicionar o Produto
                 ProdutoBusiness produtoB = new ProdutoBusiness();
-                if (_produto == null)
-                    _produto = new Produto();
-                _produto.Nome = txtNome.Text;
-                _produto.Descricao = txtDescricao.Text;
-                _produto.Preco = Convert.ToDecimal(txtPreco.Text.Replace('.', ','));
+                if (_estoque.Produto == null)
+                    _estoque.Produto = new Produto();
+                _estoque.Produto.Nome = txtNome.Text;
+                _estoque.Produto.Descricao = txtDescricao.Text;
+                _estoque.Produto.Preco = Convert.ToDecimal(txtPreco.Text.Replace('.', ','));
 
-                produtoB.Salvar(_produto);
+                produtoB.Salvar(_estoque.Produto);
+
+                EstoqueBusiness estoqueB = new EstoqueBusiness();
+                estoqueB.Salvar(_estoque);
 
                 this.DialogResult = DialogResult.OK;
                 this.Close();

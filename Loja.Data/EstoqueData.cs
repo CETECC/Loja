@@ -9,29 +9,16 @@ using System.Threading.Tasks;
 
 namespace Loja.Data
 {
-    public class ProdutoData : BaseData
+    public class EstoqueData : BaseData
     {
-        public IEnumerable<Produto> Listar()
+        private ProdutoData _produtoData;
+
+        public EstoqueData()
         {
-            // SqlConnection -> conexão com o banco de dados
-            using (IDbConnection conn = new SqlConnection(StrConn))
-            {
-                // SqlCommand -> 
-                using (IDbCommand cmd = conn.CreateCommand())
-                {
-                    cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = "SELECT ProdutoID, Nome, Descricao, Preco FROM Produto";
-
-                    conn.Open();
-                    IDataReader dr = cmd.ExecuteReader();
-
-                    IEnumerable<Produto> list = MapList(dr);
-                    return list;
-                }
-            }
+            _produtoData = new ProdutoData();
         }
 
-        public Produto Obter(int produtoID)
+        public Estoque ObterPorProduto(int produtoID)
         {
             // SqlConnection -> conexão com o banco de dados
             using (IDbConnection conn = new SqlConnection(StrConn))
@@ -40,8 +27,8 @@ namespace Loja.Data
                 using (IDbCommand cmd = conn.CreateCommand())
                 {
                     cmd.CommandType = CommandType.Text;
-                    cmd.CommandText = @"SELECT ProdutoID, Nome, Descricao, Preco 
-                                          FROM Produto
+                    cmd.CommandText = @"SELECT EstoqueID, ProdutoID, Quantidade 
+                                          FROM Estoque
                                          WHERE ProdutoID = @ProdutoID";
 
                     ((SqlCommand)cmd).Parameters.AddWithValue("@ProdutoID", produtoID);
@@ -49,34 +36,51 @@ namespace Loja.Data
                     conn.Open();
                     IDataReader dr = cmd.ExecuteReader();
 
-                    Produto result = MapSingle(dr);
+                    Estoque result = MapSingle(dr);
                     return result;
                 }
             }
         }
 
-        public void Adicionar(Produto produto)
+        public IEnumerable<Estoque> Listar()
         {
-            string strCmd = @"INSERT INTO Produto
-                               (Nome
-                               ,Descricao
-                               ,Preco)
+            // SqlConnection -> conexão com o banco de dados
+            using (IDbConnection conn = new SqlConnection(StrConn))
+            {
+                // SqlCommand -> 
+                using (IDbCommand cmd = conn.CreateCommand())
+                {
+                    cmd.CommandType = CommandType.Text;
+                    cmd.CommandText = "SELECT EstoqueID, ProdutoID, Quantidade FROM Estoque";
+
+                    conn.Open();
+                    IDataReader dr = cmd.ExecuteReader();
+
+                    IEnumerable<Estoque> result = MapList(dr);
+                    return result;
+                }
+            }
+        }
+
+        public void Adicionar(Estoque estoque)
+        {
+            string strCmd = @"INSERT INTO Estoque
+                               (ProdutoID
+                               ,Quantidade)
                          VALUES
-                               (@Nome
-                               ,@Descricao
-                               ,@Preco)";
+                               (@ProdutoID
+                               ,@Quantidade)";
 
             using (IDbConnection conn = new SqlConnection(StrConn))
             {
                 using (IDbCommand cmd = new SqlCommand(strCmd, (SqlConnection)conn))
                 {
                     // Adicionar pela interface IDbCommand
-                    IDbDataParameter p1 = new SqlParameter("@Nome", produto.Nome);
+                    IDbDataParameter p1 = new SqlParameter("@ProdutoID", estoque.Produto.ProdutoID);
                     cmd.Parameters.Add(p1);
 
                     // OU Adicionar pela classe SqlCommand
-                    ((SqlCommand)cmd).Parameters.AddWithValue("@Descricao", produto.Descricao);
-                    ((SqlCommand)cmd).Parameters.AddWithValue("@Preco", produto.Preco);
+                    ((SqlCommand)cmd).Parameters.AddWithValue("@Quantidade", estoque.Quantidade);
 
                     // Abrir a conexão
                     conn.Open();
@@ -87,22 +91,17 @@ namespace Loja.Data
             }
         }
 
-        public void Modificar(Produto produto)
+        public void Modificar(Estoque estoque)
         {
-            string strCmd = @"UPDATE Produto
-                                 SET Nome = @Nome,
-                                     Descricao = @Descricao,
-                                     Preco = @Preco
+            string strCmd = @"UPDATE Estoque
+                                 SET Quantidade = @Quantidade
                                WHERE ProdutoID = @ProdutoID";
 
             using (IDbConnection conn = new SqlConnection(StrConn))
             {
                 using (IDbCommand cmd = new SqlCommand(strCmd, (SqlConnection)conn))
                 {
-                    ((SqlCommand)cmd).Parameters.AddWithValue("@ProdutoID", produto.ProdutoID);
-                    ((SqlCommand)cmd).Parameters.AddWithValue("@Nome", produto.Nome);
-                    ((SqlCommand)cmd).Parameters.AddWithValue("@Descricao", produto.Descricao);
-                    ((SqlCommand)cmd).Parameters.AddWithValue("@Preco", produto.Preco);
+                    ((SqlCommand)cmd).Parameters.AddWithValue("@ProdutoID", estoque.Produto.ProdutoID);
 
                     // Abrir a conexão
                     conn.Open();
@@ -113,9 +112,9 @@ namespace Loja.Data
             }
         }
 
-        public void Excluir(int produtoID)
+        public void ExcluirPorProduto(int produtoID)
         {
-            string strCmd = @"DELETE Produto
+            string strCmd = @"DELETE Estoque
                                WHERE ProdutoID = @ProdutoID";
 
             using (IDbConnection conn = new SqlConnection(StrConn))
@@ -133,22 +132,22 @@ namespace Loja.Data
             }
         }
 
-        private IEnumerable<Produto> MapList(IDataReader dr)
+        private IEnumerable<Estoque> MapList(IDataReader dr)
         {
-            List<Produto> list = new List<Produto>();
+            List<Estoque> list = new List<Estoque>();
 
             while (dr.Read())
             {
-                Produto p = Map(dr);
-                list.Add(p);
+                Estoque e = Map(dr);
+                list.Add(e);
             }
 
             return list;
         }
 
-        private Produto MapSingle(IDataReader dr)
+        private Estoque MapSingle(IDataReader dr)
         {
-            Produto result = null;
+            Estoque result = null;
 
             if (dr.Read())
             {
@@ -158,13 +157,15 @@ namespace Loja.Data
             return result;
         }
 
-        private Produto Map(IDataReader dr)
+        private Estoque Map(IDataReader dr)
         {
-            Produto result = new Produto();
-            result.ProdutoID = (int)dr["ProdutoID"];
-            result.Nome = (string)dr["Nome"];
-            result.Descricao = (string)dr["Descricao"];
-            result.Preco = (decimal)dr["Preco"];
+            Estoque result = new Estoque();
+            int produtoID = (int)dr["ProdutoID"];
+            Produto produto = _produtoData.Obter(produtoID);
+
+            result.Produto = produto;
+            result.EstoqueID = (int)dr["EstoqueID"];
+            result.Quantidade = (int)dr["Quantidade"];
 
             return result;
         }

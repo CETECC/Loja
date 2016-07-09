@@ -11,10 +11,12 @@ namespace Loja.Business
     public class ProdutoBusiness
     {
         private ProdutoData _produtoData;
+        private EstoqueData _estoqueData;
 
         public ProdutoBusiness()
         {
             _produtoData = new ProdutoData();
+            _estoqueData = new EstoqueData();
         }
 
         public IEnumerable<Produto> Listar()
@@ -28,6 +30,19 @@ namespace Loja.Business
                 _produtoData.Adicionar(produto);
             else
                 _produtoData.Modificar(produto);
+        }
+
+        public bool Excluir(int produtoID)
+        {
+            Estoque estoque = _estoqueData.ObterPorProduto(produtoID);
+
+            if (estoque != null && estoque.Quantidade > 0)
+                return false;
+
+            _estoqueData.ExcluirPorProduto(produtoID);
+            _produtoData.Excluir(produtoID);
+
+            return true;
         }
     }
 }

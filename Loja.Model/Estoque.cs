@@ -8,6 +8,7 @@ namespace Loja.Model
 {
     public class Estoque
     {
+        public int EstoqueID { get; set; }
         public Produto Produto { get; set; }
         public int Quantidade { get; set; }
     }

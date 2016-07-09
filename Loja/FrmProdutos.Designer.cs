@@ -33,8 +33,10 @@
             this.colNome = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colPreco = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDescricao = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.colEstoque = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.button1 = new System.Windows.Forms.Button();
             this.btnEditar = new System.Windows.Forms.Button();
+            this.btnRemover = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // lstProdutos
@@ -43,14 +45,15 @@
             this.colID,
             this.colNome,
             this.colPreco,
-            this.colDescricao});
+            this.colDescricao,
+            this.colEstoque});
             this.lstProdutos.Dock = System.Windows.Forms.DockStyle.Top;
             this.lstProdutos.FullRowSelect = true;
             this.lstProdutos.HideSelection = false;
             this.lstProdutos.Location = new System.Drawing.Point(0, 0);
             this.lstProdutos.MultiSelect = false;
             this.lstProdutos.Name = "lstProdutos";
-            this.lstProdutos.Size = new System.Drawing.Size(535, 192);
+            this.lstProdutos.Size = new System.Drawing.Size(688, 192);
             this.lstProdutos.TabIndex = 0;
             this.lstProdutos.UseCompatibleStateImageBehavior = false;
             this.lstProdutos.View = System.Windows.Forms.View.Details;
@@ -63,7 +66,7 @@
             // colNome
             // 
             this.colNome.Text = "Nome";
-            this.colNome.Width = 148;
+            this.colNome.Width = 185;
             // 
             // colPreco
             // 
@@ -76,12 +79,18 @@
             // 
             this.colDescricao.DisplayIndex = 2;
             this.colDescricao.Text = "Descrição";
-            this.colDescricao.Width = 199;
+            this.colDescricao.Width = 221;
+            // 
+            // colEstoque
+            // 
+            this.colEstoque.Text = "Qtd. Estoque";
+            this.colEstoque.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.colEstoque.Width = 84;
             // 
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(11, 197);
-            this.button1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button1.Margin = new System.Windows.Forms.Padding(2);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(81, 34);
             this.button1.TabIndex = 1;
@@ -100,11 +109,22 @@
             this.btnEditar.UseVisualStyleBackColor = true;
             this.btnEditar.Click += new System.EventHandler(this.btnEditar_Click);
             // 
+            // btnRemover
+            // 
+            this.btnRemover.Location = new System.Drawing.Point(262, 197);
+            this.btnRemover.Name = "btnRemover";
+            this.btnRemover.Size = new System.Drawing.Size(81, 34);
+            this.btnRemover.TabIndex = 3;
+            this.btnRemover.Text = "Remover";
+            this.btnRemover.UseVisualStyleBackColor = true;
+            this.btnRemover.Click += new System.EventHandler(this.btnRemover_Click);
+            // 
             // FrmProdutos
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(535, 275);
+            this.ClientSize = new System.Drawing.Size(688, 275);
+            this.Controls.Add(this.btnRemover);
             this.Controls.Add(this.btnEditar);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.lstProdutos);
@@ -127,5 +147,7 @@
         private System.Windows.Forms.ColumnHeader colDescricao;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btnEditar;
+        private System.Windows.Forms.ColumnHeader colEstoque;
+        private System.Windows.Forms.Button btnRemover;
     }
 }

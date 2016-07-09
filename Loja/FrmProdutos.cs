@@ -14,27 +14,28 @@ namespace Loja
 {
     public partial class FrmProdutos : Form
     {
-        private ProdutoBusiness _produtoBusiness;
-        private IEnumerable<Produto> _produtos;
+        private EstoqueBusiness _estoqueBusiness;
+        private IEnumerable<Estoque> _estoque;
 
         public FrmProdutos()
         {
             InitializeComponent();
-            _produtoBusiness = new ProdutoBusiness();
+            _estoqueBusiness = new EstoqueBusiness();
         }
 
         private void FrmProdutos_Load(object sender, EventArgs e)
         {
-            _produtos = _produtoBusiness.Listar();
+            _estoque = _estoqueBusiness.Listar();
 
-            if (_produtos != null)
+            if (_estoque != null)
             {
-                foreach (Produto produto in _produtos)
+                foreach (Estoque estoque in _estoque)
                 {
-                    ListViewItem item = new ListViewItem(produto.ProdutoID.ToString());
-                    item.SubItems.Add(produto.Nome);
-                    item.SubItems.Add(produto.Preco.ToString("C"));
-                    item.SubItems.Add(produto.Descricao);
+                    ListViewItem item = new ListViewItem(estoque.Produto.ProdutoID.ToString());
+                    item.SubItems.Add(estoque.Produto.Nome);
+                    item.SubItems.Add(estoque.Produto.Preco.ToString("C"));
+                    item.SubItems.Add(estoque.Produto.Descricao);
+                    item.SubItems.Add(estoque.Quantidade.ToString());
 
                     lstProdutos.Items.Add(item);
                 }
@@ -65,8 +66,8 @@ namespace Loja
             int id = int.Parse(strID);
 
             // Language INtegrated Query (expresões lambda)
-            Produto produto = _produtos.SingleOrDefault(p => p.ProdutoID == id);
-            FrmProdutoNovo frm = new FrmProdutoNovo(produto);
+            Estoque estoque = _estoque.SingleOrDefault(est => est.Produto.ProdutoID == id);
+            FrmProdutoNovo frm = new FrmProdutoNovo(estoque);
 
             if (frm.ShowDialog() == DialogResult.OK)
             {
@@ -79,6 +80,11 @@ namespace Loja
         {
             if (lstProdutos.SelectedItems.Count > 0)
                 btnEditar.Enabled = true;
+        }
+
+        private void btnRemover_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
